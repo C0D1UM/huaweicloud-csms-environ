@@ -7,7 +7,7 @@ from huaweicloudsdkcsms import v1 as csms
 from huaweicloudsdkcsms.v1.region.csms_region import CsmsRegion
 
 
-class CsmsService:
+class Csms:
 
     def __init__(self, access_key: str = None, secret_key: str = None, project_id: str = None, region: str = None):
         if access_key:
@@ -32,3 +32,12 @@ class CsmsService:
 
     def get_json_secret(self, secret_name: str, version_id='latest'):
         return json.loads(self.get_raw_secret(secret_name, version_id))
+
+    def load_env(self, secret_name: str = None, version_id='latest'):
+        if secret_name is None:
+            secret_name = os.environ.get('HUAWEICLOUD_SECRET_NAME')
+        assert secret_name, 'Secret name is not set'
+
+        secrets = self.get_json_secret(secret_name, version_id)
+        for key, value in secrets.items():
+            os.environ[key] = value
