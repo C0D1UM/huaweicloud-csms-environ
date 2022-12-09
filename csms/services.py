@@ -4,6 +4,7 @@ import os
 from huaweicloudsdkcore.auth.credentials import BasicCredentials
 from huaweicloudsdkcore.auth.provider import EnvCredentialProvider
 from huaweicloudsdkcsms import v1 as csms
+from huaweicloudsdkcsms.v1.region.csms_region import CsmsRegion
 
 
 class CsmsService:
@@ -20,7 +21,7 @@ class CsmsService:
 
         self.client = csms.CsmsClient.new_builder().with_credentials(self._credentials)
         if region:
-            self.client = self.client.with_region(csms.region.csms.CsmsRegion.value_of(region))
+            self.client = self.client.with_region(CsmsRegion.value_of(region))
 
         self.client = self.client.build()
 
